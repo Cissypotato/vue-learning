@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>conputed</title>
+    <script src="../scripts/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <div>firstName:{{firstName}}</div>
+        <div>lastName:{{lastName}}</div>
+        <div>fullName:{{fullName}}</div>
+        <div>fullName:{{fullName}}</div><div>fullName:{{fullName}}</div><div>fullName:{{fullName}}</div>
+        <hr />
+        <!-- <div>fullName:{{fullName()}}</div>
+        <div>fullName:{{fullName()}}</div> -->
+    </div>
+    <script>
+        Vue.config.productionTip = false
+
+        var vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    firstName: 'jack',
+                    lastName: 'zhang',
+                }
+            },
+            computed: {
+                fullName:function(){
+                    // console.log('fullname')
+                    return this.firstName +' '+this.lastName
+                }
+                // fullName: {
+                //     get() {
+                //         console.log('fullname')
+                //         return this.firstName + ' ' + this.lastName
+                //     }
+
+                // }
+
+            },
+            methods: {
+                //     fullName(){
+                //         // console.log('method')
+                //         return this.firstName +' '+this.lastName
+                // }
+            }
+        })
+    </script>
+</body>
+
+</html>
