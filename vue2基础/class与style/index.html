@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>class add style</title>
+    <script src="../scripts/vue.js"></script>
+</head>
+<style>
+    .basic{
+        border: 1px solid #000;
+        font-size: 40px;
+        text-align: center;
+    }
+    .pink{
+        color: pink;
+    }
+    .green{
+        color: green;
+    }
+    .red{color: red;}
+
+    .background{
+        background-color: #EFEFEF;
+    }
+    .boderColor{
+        border-color: #eee;
+    }
+    .borderRadius{
+        border-radius:20px ;
+    }
+
+    .normal{
+        border: 1px solid #000;
+        font-size: 40px;
+        text-align: center;
+        color: #333;
+        background: #efefef;
+    }
+    .error{
+        border: 1px solid red;
+        font-size: 40px;
+        text-align: center;
+        color: rgb(255, 0, 0);
+    }
+
+</style>
+<body>
+    <div id="root">
+        <!-- 字符串写法，用于样式类名不确定，需动态指定 -->
+          <div class="basic" :class="color" @click="changeColor">  vue yyds </div>
+          <br/>
+          <br/>
+           <!-- 数组写法，适用于绑定样式个数不确定，名字也不确定（就可以操作数组增删改） -->
+          <div class="basic" :class="classArr" >  vue  yyds </div>
+          <br/>
+          <br/>
+           <!-- 对象写法，用于样式类名确定，个数也确定，用不用则需动态指定 -->
+          <div  :class="classObj" >  vue  yyds </div>
+          <br/>
+          <br/>
+           <!-- style,使用对象，且样式名用大驼峰 -->
+          <div  :style="styleObj" >  vue  yyds </div>
+          <div  :style="[styleObj,a]" >  vue  yyds </div>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+              color:'pink',
+              classArr:['background','boderColor','borderRadius'],
+              classObj:{
+                  normal:true,
+                  error:false
+              },
+              styleObj:{
+                  fontSize:'40px',//大驼峰
+                  textAlign:'center'
+              },
+              a:{
+                  border:'1px solid pink'
+              }
+            },
+           methods: {
+               changeColor(){
+                   const colorArr=['pink','red','green']
+                   let index=Math.floor(Math.random()*3) 
+                   this.color=colorArr[index]
+               }
+           },
+
+        })
+    </script>
+</body>
+
+</html>
