@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据检测</title>
+    <script src="../scripts/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+
+        <!-- <button @click="changeJack">changeJack</button>
+        <ul>
+            <li v-for="(item, index) in persons" :key="item.id">
+                {{item.name}}-{{item.age}}
+            </li>
+        </ul> -->
+        <hr>
+        <!-- <button @click="changeAge">changeAge</button>
+        <div>
+            {{student.name}}-{{student.gender}}<span>{{student.age}}</span>
+        </div> -->
+    </div>
+    <script>
+        /****关于更改数组不起作用的现象****/
+        // const vm = new Vue({
+        //     el: '#root',
+        //     data: {
+        //         persons: [{
+        //                 id: 1,
+        //                 name: 'jack',
+        //                 age: 18
+        //             },
+        //             {
+        //                 id: 2,
+        //                 name: 'rose',
+        //                 age: 16
+        //             }, {
+        //                 id: 3,
+        //                 name: 'john',
+        //                 age: 17
+        //             }
+
+        //         ],
+        //     },
+        //     methods: {
+        //         changeJack() {
+        //             console.log('changeJack')
+        //             // this.persons[0].name="jackkkkk"//行
+                 
+        //             // this.persons[0]={
+        //             //     id: 1,
+        //             //     name: 'jackkkkk',
+        //             //     age: 19
+        //             // }//不行，vm.person[0]发生改变，但是页面没发生改变，vue开发者工具中的数据没发生改变
+
+        //             // this.$set(this.persons,0,{id: 1,name: 'jackkkkk', age: 19})
+        //         }
+        //     },
+
+        // })
+
+        /****vm._data的简单实现****/
+        //加工 data 
+        //vm._data=data
+
+        // let data = {
+        //     name: 'rose',
+        //     gender: 'female',
+        // }
+
+        // const objs = new Observer(data)
+        // let vm = {} 
+
+        // vm._data=data= objs
+
+        // function Observer(obj) {
+        //     const keys = Object.keys(obj)
+        //     keys.forEach((key) => {
+        //         Object.defineProperty(this, key, {
+
+        //             get() {
+        //                 return obj[key]
+        //             },
+        //             set(val) {
+        //                 console.log(`${key}改变了`)
+        //                 obj[key] = val
+        //             }
+        //         })
+        //     })
+        // }
+        //vue写了递归，所以不论对象有多少层，都会有getter和setter
+
+        /****vue.set()***/
+
+        // const vm = new Vue({
+        //     el: '#root',
+        //     data: {
+        //         student: {
+        //             name: 'rose',
+        //             gender: 'female',
+        //         }
+        //     },
+
+        //     mounted() {
+        //        // this.student.age=18//这样给响应式对象没有的属性赋值，只会有第一次的值，是这个属性是非响应式的（不会在模板中体现）；
+        //        this.$set(this.student,'age',18)//向响应式对象中添加一个 property，并确保这个新 property 同样是响应式的，且触发视图更新就用this.$set()
+
+        //         // console.log(this.student.age,'age')
+        //     },
+        //     methods: {
+        //         changeAge(){
+        //             this.student.age=19
+        //             console.log(this.student.age,'age2')
+        //         }
+        //     },
+
+        // })
+
+        /****改变响应式数组索引值的方法***/
+
+        //1.用vue自己包装过的数组方法
+        // push()
+        // pop()
+        // shift()
+        // unshift()
+        // splice()
+        // sort()
+        // reverse()
+         //2.用Vue.set(arr,index,value)
+         //this.$set(this.persons,0,{id: 1,name: 'jackkkkk', age: 19})
+
+
+          /****总结***/
+          //vue 监视数据原理
+          //1.vue会监视data中所有数据
+          //2.如何监测对象中的数据
+              //通过setter实现监测，且要在new vue时传入要检测的数据（属性）
+              //在对象中添加新的属性，直接添加，不会做响应式处理，
+              //要添加响应式数据（属性），则用Vue.set()/this.$set()添加
+        //3.如何监测数组中的数据
+              //通过包裹数组更新元素的方法实现，本质就是调用原生对应的方法对数组进行更新，重新解析模板，进而更新页面
+              //这些方法是：push(),pop(),shift(),unshift(),splice(),sort(),reverse(),
+              //也可以用set方法 this.$set(arr,index,value)
+
+
+
+    </script>
+</body>
+
+</html>
