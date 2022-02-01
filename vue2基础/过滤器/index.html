@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>filters</title>
+    <script src="../scripts/vue.js"></script>
+    <script src="../scripts/dayjs.js"></script>
+</head>
+<body>
+    <!-- 定义：对要显示的数据进行特定的格式化之后显示
+    语法：
+        注册：Vue.filter(name,callback);new Vue{filter:{}}
+        使用：{{需要过滤的数据 | 过滤器名}}；v-bind="需要过滤的数据 | 过滤器名" (后者很少使用)
+    备注：可以传额外参数，默认第一个参数是需要过滤的数据；并没有改变原数据；多个过滤器可以串联，后一个的value是上一个过滤器过滤之后的值 -->
+    <div id="root">
+       <div>
+            computed:{{fatTime}}
+       </div>
+       <br>
+       <div>
+           methods:{{getFarTime()}}
+       </div>
+       <br>
+       <div>
+           filters:{{time | fatTime('YYYY-MM-DD HH')}}
+           
+       </div>
+       <br>
+       <div>
+        successive filters:{{time | fatTime() | sliceStr()}}
+       </div>
+    </div>
+    <br>
+    <div id="root2">
+        global filter:{{time | fatTime() | sliceStr()}}
+    </div>
+    <script>
+        Vue.filter( 'sliceStr',function(value){
+                    return value.slice(0,4)
+                })
+        const vm=new Vue({
+            el:'#root',
+            data: {
+               time:1643688100630
+            },
+            computed:{
+                fatTime(){
+                    return dayjs(this.time).format('YYYY-MM-DD HH:mm:ss')
+                }
+            },
+            methods: {
+                getFarTime(){
+                    return dayjs(this.time).format('YYYY-MM-DD HH:mm:ss')
+                }
+            },
+            filters:{
+                fatTime(value,str='YYYY-MM-DD HH:mm:ss'){
+                    return dayjs(value).format(str)
+                },
+                // sliceStr(value){
+                //     return value.slice(0,4)
+                // }
+            }
+
+        })
+        const vm2=new Vue({
+            el:'#root2',
+            data:{
+                time:1643688100630
+            },
+            filters:{
+                fatTime(value){
+                    return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+                },
+                // sliceStr(value){
+                //     return value.slice(0,4)
+                // }
+            }
+        })
+    </script>
+</body>
+</html>
