@@ -20,6 +20,9 @@ export default {
       this.fromApple=data
     });
   },
+  beforeDestroy(){
+      this.$bus.$off('receive')
+  },
   methods: {
   },
 };
