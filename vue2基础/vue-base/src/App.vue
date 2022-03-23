@@ -1,23 +1,78 @@
 <template>
   <div id="app">
-    <apple/>
-    <peach/>
+    <div class="todo-container">
+      <div class="todo-wrap">
+        <my-header :addTodo="addTodo" />
+        <list :todos="todos" />
+        <my-footer
+          :todos="todos"
+          :handleAll="handleAll"
+          :clearDone="clearDone"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Apple from './components/Apple.vue'
-import Peach from './components/Peach.vue'
+import MyHeader from "./components/MyHeader";
+import List from "./components/List";
+import MyFooter from "./components/MyFooter";
 
-  
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Apple,
-    Peach
-    
-  }
-}
+    MyHeader,
+    List,
+    MyFooter,
+  },
+  data() {
+    return {
+      todos: JSON.parse(localStorage.getItem("todos")) || [],
+    };
+  },
+  watch: {
+    todos: {
+      deep: true,
+      handler(val) {
+        console.log(val);
+        localStorage.setItem("todos", JSON.stringify(val));
+      },
+    },
+  },
+  mounted() {
+    this.$bus.$on("todoCheck", (e) => {
+      this.todoCheck(e);
+    });
+    this.$bus.$on("removeTodo", (id) => {
+      this.removeTodo(id);
+    });
+  },
+  beforeDestroy() {
+    this.$bus.$off(["todoCheck", "removeTodo"]);
+  },
+  methods: {
+    addTodo(obj) {
+      this.todos.unshift(obj);
+    },
+    todoCheck(id) {
+      this.todos.forEach((item) => {
+        if (id === item.id) {
+          item.done = !item.done;
+        }
+      });
+    },
+    removeTodo(id) {
+      this.todos = this.todos.filter((item) => item.id !== id);
+    },
+    handleAll(value) {
+      this.todos.forEach((todo) => (todo.done = value));
+    },
+    clearDone() {
+      this.todos = this.todos.filter((todo) => !todo.done);
+    },
+  },
+};
 </script>
 
 <style>
@@ -35,7 +90,7 @@ body {
 }
 
 .btn {
-  display: inline-block;
+  /* display: inline-block; */
   padding: 4px 12px;
   margin-bottom: 0;
   font-size: 14px;
@@ -43,7 +98,8 @@ body {
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
 }
 
@@ -52,7 +108,12 @@ body {
   background-color: #da4f49;
   border: 1px solid #bd362f;
 }
-
+.btn-edit {
+  color: #fff;
+  background-color: #084925;
+  border: 1px solid #084925;
+  margin-right: 5px;
+}
 .btn-danger:hover {
   color: #fff;
   background-color: #bd362f;
@@ -71,98 +132,4 @@ body {
   border: 1px solid #ddd;
   border-radius: 5px;
 }
-
-/*header*/
-.todo-header input {
-  width: 560px;
-  height: 28px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 4px 7px;
-}
-
-.todo-header input:focus {
-  outline: none;
-  border-color: rgba(82, 168, 236, 0.8);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-}
-
-/*main*/
-.todo-main {
-  margin-left: 0px;
-  border: 1px solid #ddd;
-  border-radius: 2px;
-  padding: 0px;
-}
-
-.todo-empty {
-  height: 40px;
-  line-height: 40px;
-  border: 1px solid #ddd;
-  border-radius: 2px;
-  padding-left: 5px;
-  margin-top: 10px;
-}
-/*item*/
-li {
-  list-style: none;
-  height: 36px;
-  line-height: 36px;
-  padding: 0 5px;
-  border-bottom: 1px solid #ddd;
-}
-
-li label {
-  float: left;
-  cursor: pointer;
-}
-
-li label li input {
-  vertical-align: middle;
-  margin-right: 6px;
-  position: relative;
-  top: -1px;
-}
-
-li button {
-  float: right;
-  display: none;
-  margin-top: 3px;
-}
-
-li:before {
-  content: initial;
-}
-
-li:last-child {
-  border-bottom: none;
-}
-
-/*footer*/
-.todo-footer {
-  height: 40px;
-  line-height: 40px;
-  padding-left: 6px;
-  margin-top: 5px;
-}
-
-.todo-footer label {
-  display: inline-block;
-  margin-right: 20px;
-  cursor: pointer;
-}
-
-.todo-footer label input {
-  position: relative;
-  top: -1px;
-  vertical-align: middle;
-  margin-right: 5px;
-}
-
-.todo-footer button {
-  float: right;
-  margin-top: 5px;
-}
-
 </style>
