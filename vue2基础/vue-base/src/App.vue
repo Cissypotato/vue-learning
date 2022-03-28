@@ -1,87 +1,18 @@
 <template>
   <div id="app">
-    <div class="todo-container">
-      <div class="todo-wrap">
-        <my-header :addTodo="addTodo" />
-        <list :todos="todos" />
-        <my-footer
-          :todos="todos"
-          :handleAll="handleAll"
-          :clearDone="clearDone"
-        />
-      </div>
-    </div>
+    <test1></test1>
+    
   </div>
 </template>
 
 <script>
-import MyHeader from "./components/MyHeader";
-import List from "./components/List";
-import MyFooter from "./components/MyFooter";
+ import test1 from './components/test1.vue'
 
 export default {
   name: "App",
   components: {
-    MyHeader,
-    List,
-    MyFooter,
-  },
-  data() {
-    return {
-      todos: JSON.parse(localStorage.getItem("todos")) || [],
-    };
-  },
-  watch: {
-    todos: {
-      deep: true,
-      handler(val) {
-        console.log(val);
-        localStorage.setItem("todos", JSON.stringify(val));
-      },
-    },
-  },
-  mounted() {
-    this.$bus.$on("todoCheck", (e) => {
-      this.todoCheck(e);
-    });
-    this.$bus.$on("removeTodo", (id) => {
-      this.removeTodo(id);
-    });
-    this.$bus.$on("editTodo", (id,value) => {
-      this.editTodo(id,value);
-    });
-  },
-  beforeDestroy() {
-    this.$bus.$off(["todoCheck", "removeTodo"]);
-  },
-  methods: {
-    addTodo(obj) {
-      this.todos.unshift(obj);
-    },
-    todoCheck(id) {
-      this.todos.forEach((item) => {
-        if (id === item.id) {
-          item.done = !item.done;
-        }
-      });
-    },
-    removeTodo(id) {
-      this.todos = this.todos.filter((item) => item.id !== id);
-    },
-    editTodo(id,value){
-       this.todos.forEach((item) => {
-        if (id === item.id) {
-          item.name =value;
-        }
-      });
-    },
-    handleAll(value) {
-      this.todos.forEach((todo) => (todo.done = value));
-    },
-    clearDone() {
-      this.todos = this.todos.filter((todo) => !todo.done);
-    },
-  },
+    test1
+  }
 };
 </script>
 
