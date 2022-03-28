@@ -3,8 +3,12 @@
     <div class="todo-container">
       <div class="todo-wrap">
         <my-header :addTodo="addTodo" />
-        <list :todos="todos" :todoCheck="todoCheck" :removeTodo="removeTodo" />
-        <my-footer :todos="todos" :handleAll="handleAll" :clearDone="clearDone" />
+        <list :todos="todos" />
+        <my-footer
+          :todos="todos"
+          :handleAll="handleAll"
+          :clearDone="clearDone"
+        />
       </div>
     </div>
   </div>
@@ -24,38 +28,59 @@ export default {
   },
   data() {
     return {
-      todos:JSON.parse(localStorage.getItem('todos')) || [],
+      todos: JSON.parse(localStorage.getItem("todos")) || [],
     };
   },
-  watch:{
-    todos:{
-      deep:true,
-     handler(val) {
-       console.log(val)
-        localStorage.setItem('todos',JSON.stringify(val))
-      }
-    }
+  watch: {
+    todos: {
+      deep: true,
+      handler(val) {
+        console.log(val);
+        localStorage.setItem("todos", JSON.stringify(val));
+      },
+    },
+  },
+  mounted() {
+    this.$bus.$on("todoCheck", (e) => {
+      this.todoCheck(e);
+    });
+    this.$bus.$on("removeTodo", (id) => {
+      this.removeTodo(id);
+    });
+    this.$bus.$on("editTodo", (id,value) => {
+      this.editTodo(id,value);
+    });
+  },
+  beforeDestroy() {
+    this.$bus.$off(["todoCheck", "removeTodo"]);
   },
   methods: {
-    addTodo(obj){
-      this.todos.unshift(obj)
+    addTodo(obj) {
+      this.todos.unshift(obj);
     },
-    todoCheck(id){
-      this.todos.forEach(item=>{
-        if(id===item.id){
-          item.done=!item.done
+    todoCheck(id) {
+      this.todos.forEach((item) => {
+        if (id === item.id) {
+          item.done = !item.done;
         }
-      })
+      });
     },
-    removeTodo(id){
-      this.todos=this.todos.filter((item)=>item.id!==id)
+    removeTodo(id) {
+      this.todos = this.todos.filter((item) => item.id !== id);
     },
-    handleAll(value){
-      this.todos.forEach(todo=>todo.done=value)
+    editTodo(id,value){
+       this.todos.forEach((item) => {
+        if (id === item.id) {
+          item.name =value;
+        }
+      });
     },
-    clearDone(){
-      this.todos=this.todos.filter((todo)=>!todo.done)
-    }
+    handleAll(value) {
+      this.todos.forEach((todo) => (todo.done = value));
+    },
+    clearDone() {
+      this.todos = this.todos.filter((todo) => !todo.done);
+    },
   },
 };
 </script>
@@ -93,7 +118,12 @@ body {
   background-color: #da4f49;
   border: 1px solid #bd362f;
 }
-
+.btn-edit {
+  color: #fff;
+  background-color: #084925;
+  border: 1px solid #084925;
+  margin-right: 5px;
+}
 .btn-danger:hover {
   color: #fff;
   background-color: #bd362f;
@@ -112,6 +142,4 @@ body {
   border: 1px solid #ddd;
   border-radius: 5px;
 }
-
-
 </style>

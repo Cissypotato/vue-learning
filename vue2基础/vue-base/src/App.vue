@@ -47,6 +47,9 @@ export default {
     this.$bus.$on("removeTodo", (id) => {
       this.removeTodo(id);
     });
+    this.$bus.$on("editTodo", (id,value) => {
+      this.editTodo(id,value);
+    });
   },
   beforeDestroy() {
     this.$bus.$off(["todoCheck", "removeTodo"]);
@@ -64,6 +67,13 @@ export default {
     },
     removeTodo(id) {
       this.todos = this.todos.filter((item) => item.id !== id);
+    },
+    editTodo(id,value){
+       this.todos.forEach((item) => {
+        if (id === item.id) {
+          item.name =value;
+        }
+      });
     },
     handleAll(value) {
       this.todos.forEach((todo) => (todo.done = value));

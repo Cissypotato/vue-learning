@@ -4,8 +4,6 @@
       v-for="todo in todos"
       :todo="todo"
       :key="todo.id"
-      :todoCheck="todoCheck"
-      :removeTodo="removeTodo"
     />
   </ul>
 </template>
@@ -13,7 +11,7 @@
 import ListItem from "./ListItem.vue";
 export default {
   name: "List",
-  props: ["todos", "todoCheck","removeTodo"],
+  props: ["todos"],
   components: {
     ListItem,
   },
