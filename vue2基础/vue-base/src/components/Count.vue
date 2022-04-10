@@ -1,9 +1,13 @@
 <template>
   <div>
-    <h1>当前和为{{ $store.state.sum }}</h1>
-    <p>当前和的10倍为{{bigSum}}</p>
+    <h1>当前和为{{ $store.state.countAbout.sum }}</h1>
+    <p>当前和的10倍为{{ bigSum }}</p>
     <!-- <p>111</p> -->
-    <p>cc's favorite fruit is {{fruit}} and favorite vegetable is {{vegetable}}</p>
+    <p>
+      cc's favorite fruit is {{ fruit }} and favorite vegetable is
+      {{ vegetable }}
+    </p>
+    <p>person 组件的总人数为{{ personList.length }}</p>
     <div>
       <select v-model.number="num">
         <option value="1">1</option>
@@ -18,8 +22,7 @@
   </div>
 </template>
 <script>
-import { mapState,mapGetters,mapMutations,mapActions } from 'vuex';
-
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   name: "Count",
@@ -29,27 +32,26 @@ export default {
       num: 1,
     };
   },
-  computed:{
+  computed: {
     //mapState 对象写法
     // ...mapState({fruit:'fruit',vegetable:'vegetable'})
     //数组写法
-    ...mapState(['fruit','vegetable']),
-    ...mapGetters(['bigSum'])
+    ...mapState("countAbout", ["fruit", "vegetable"]),
+    ...mapState("personAbout", ["personList"]),
+    ...mapGetters("countAbout", ["bigSum"]),
   },
-  mounted(){
-    // console.log(this,'vuex')
+  mounted() {
+    console.log(this.$store,'vuex')
   },
 
-  methods:{
+  methods: {
     // increase(){
     //   this.$store.commit('ADD',this.num)
     // },
     // decrease(){
     //   this.$store.commit('SUBTRACT',this.num)
     // },
-    ...mapMutations({increase:'ADD',decrease:'SUBTRACT'}),
-
-
+    ...mapMutations("countAbout",{ increase: "ADD", decrease: "SUBTRACT" }),
 
     // increaseOdd(){
     //  this.$store.dispatch('addOdd',this.num)
@@ -57,12 +59,12 @@ export default {
     // increaseWait(){
     //    this.$store.dispatch('addWait',this.num)
     // },
-    ...mapActions(['addOdd','addWait'])
-  }
+    ...mapActions("countAbout",["addOdd", "addWait"]),
+  },
 };
 </script>
 <style scoped>
-button{
+button {
   margin-left: 4px;
 }
 </style>
