@@ -4,6 +4,7 @@ import Home from '../components/Home.vue'
 import About from '../components/About.vue'
 import News from '../components/News.vue'
 import Message from '../components/Message.vue'
+import Detail from '../components/Detail.vue'
 
 export default new VueRouter({
     routes:[
@@ -17,7 +18,14 @@ export default new VueRouter({
                 },
                 {
                     path:'message',
-                    component:Message,  
+                    component:Message, 
+                    children:[
+                        {
+                            name:'msgDetail',
+                            path:'detail/:id/:name',
+                            component:Detail
+                        }
+                    ] 
                 },
             ]
         },
