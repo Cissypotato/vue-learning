@@ -8,18 +8,19 @@
         > -->
 
         <!-- 跳转路由携带parmas参数，to的对象写法。注意：必须用name，不能用path -->
+
+       
+          <router-link
+            :to="{
+              name: 'msgDetail',
+              params: {
+                id: msg.id,
+                name: msg.name,
+              },
+            }"
+            >{{ msg.name }}&nbsp;&nbsp;</router-link
+          >
       
-        <router-link
-          :to="{
-            name:'msgDetail',
-            params: {
-              id: msg.id,
-              name: msg.name,
-            },
-          }"
-          >{{ msg.name }}&nbsp;&nbsp;</router-link
-        > 
-        
       </li>
 
       <hr />
