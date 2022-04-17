@@ -7,6 +7,7 @@ import Message from '../components/Message.vue'
 import Detail from '../components/Detail.vue'
 
 const router = new VueRouter({
+    mode:'history',
     routes: [
         {
             name: 'About',
