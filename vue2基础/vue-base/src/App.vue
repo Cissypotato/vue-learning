@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-xs-offset-2 col-xs-8">
         <div class="page-header"><h2>Vue Router Demo</h2></div>
+        <div><button @click="forwardRoute">forward</button><button @click="backRoute">back</button><button @click="goRoute">go</button></div>
       </div>
     </div>
     <div class="row">
@@ -35,6 +36,19 @@ export default {
   name: "App",
 
   components: {},
+  methods:{
+    forwardRoute(){
+      this.$router.forward()
+    },
+    backRoute(){
+      this.$router.back()
+    },
+    goRoute(){
+      this.$router.go(-2)//当前历史记录后退两步
+      // this.$router.go(3)//当前历史记录前进三步
+    }
+    
+  }
 };
 </script>
 

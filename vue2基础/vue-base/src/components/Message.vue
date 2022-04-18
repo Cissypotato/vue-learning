@@ -17,7 +17,7 @@
               name: msg.name,
             },
           }"
-          >{{ msg.name }}&nbsp;&nbsp;</router-link
+          >{{ msg.name }}&nbsp;&nbsp;<button @click="pushRoute(msg)">push</button> <button @click="replaceRoute(msg)">replace</button></router-link
         > 
         
       </li>
@@ -48,5 +48,33 @@ export default {
       ],
     };
   },
+  mounted(){
+    console.log(this.$router,'vc')
+  },
+  methods:{
+    pushRoute(msg){
+      this.$router.push(
+        {
+            name:'msgDetail',
+            params: {
+              id: msg.id,
+              name: msg.name,
+            },
+          }
+      )
+    },
+    replaceRoute(msg){
+       this.$router.replace(
+        {
+            name:'msgDetail',
+            params: {
+              id: msg.id,
+              name: msg.name,
+            },
+          }
+      )
+    }
+  }
+
 };
 </script>
