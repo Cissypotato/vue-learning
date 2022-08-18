@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>begin with vue </title>
+    <script src="../scripts/vue.js"></script>
+</head>
+<body>
+    <!--
+        1.创建一个vue实例，这个实例需要传入一个配置对象
+        2.root为一个容器，和一般的html差不多，只是混入了vue语法；它里面的代码被称为模板语法
+        3.{{xxx}}可以是js表达式，也可以是data里面的属性
+        4.data里面的数据发生变化，root里的数据也会相应发生变化（响应式数据）
+
+        js表达式：一个表达式会产生一个值
+        eg：a
+            a+b
+            demo(1)
+            x===1?a:b
+        js语句：if(){}等
+
+    -->
+    <div id="root">
+        {{msg}}
+    </div>
+    <script>
+        Vue.config.productionTip = false
+        let vm=new Vue({
+            el:'#root',
+            data:{
+                msg:'hello vue'
+            },
+        })
+    </script>
+</body>
+</html>

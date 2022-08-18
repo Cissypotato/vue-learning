@@ -3,7 +3,7 @@
     <div class="panel">
       <div class="panel-body">
         <div>
-          <h2>Home组件内容</h2>
+          <h2 class="title">Home组件内容</h2>
           <div>
             <ul class="nav nav-tabs">
               <li>
@@ -37,3 +37,9 @@ export default {
   name: "Home",
 };
 </script>
+
+<style scoped>
+  .title{
+    border: 1px solid red;
+  }
+</style>

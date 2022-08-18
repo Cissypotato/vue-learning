@@ -28,14 +28,21 @@
         </div>
       </div>
     </div>
+
+    <div>
+      <home class="f-title"/>
+    </div>
   </div>
+
+  
 </template>
 
 <script>
+import Home from './components/Home.vue'
 export default {
   name: "App",
 
-  components: {},
+  components: {Home},
   methods:{
     forwardRoute(){
       this.$router.forward()
@@ -53,4 +60,7 @@ export default {
 </script>
 
 <style scoped>
+.f-title >>> .title{
+  color: aqua;
+}
 </style>

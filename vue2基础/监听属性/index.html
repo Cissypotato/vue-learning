@@ -35,6 +35,7 @@
                 //简写形式，不需要immediate和deep时
                 a:function(val,oldVal) {
                     console.log(val,oldVal,'a changed')
+                    console.log(this.a,'a changed')
                 },
 
                 b:{
@@ -42,6 +43,18 @@
                     deep:true,//是否深度监视，默认false
                     handler:function(val,oldVal){
                         console.log(val,oldVal,'b changed')
+                    }
+                }
+
+            },
+            mounted() {
+                this.a++
+                this.init()//只能监测a最后一次循环的结果
+            },
+            methods: {
+                init(){
+                    for(let i =0;i<10;i++){
+                        this.a++
                     }
                 }
             },

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>events</title>
+    <script src="../scripts/vue.js"></script>
+    <style>
+        .btn-wrapper{
+            height: 100px;
+            padding: 40px;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 事件基本使用
+1. 使用v-on: eventName或@eventName绑定事件
+2. 事件的回调配置在methods中，最终出现在vm身上
+3. methods中配置的函数，this指向vm或组件实例对象，所以这些函数不能使用箭头函数，会改变this的指向
+4. 关于$event：事件没有传参时，回调的默认参数是一个事件/监听器键值对的对象；事件有传参时，需要用$event获取事件/监听器键值对的对象 -->
+
+    <div id="root">
+        <div @click="click1">主人，请点击我</div>
+        <div class="btn-wrapper" v-on:click="click2('miao miao',$event)">
+            <button v-on:click.stop="click2('miao miao',$event)">主人，请不要点击我</button>
+        </div>
+        <div class="btn-wrapper">
+            <button v-on:click.once.stop="click2('miao miao',$event)">主人，请不要点击我</button>
+        </div>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+
+            },
+            methods: {
+                click1(e) {
+                    console.log(e)//PointerEvent {isTrusted: true, pointerId: 1, width: 1, height: 1, pressure: 0, …}
+                    window.alert('汪汪汪')
+                },
+                click2(a, b) {
+                    console.log(a, b)//miao miao PointerEvent {isTrusted: true, pointerId: 1, width: 1, height: 1, pressure: 0, …}
+                    //一般将b写为$event，与一般参数做个差别
+                    window.alert(a)
+                }
+
+            },
+
+        })
+    </script>
+</body>
+
+</html>
