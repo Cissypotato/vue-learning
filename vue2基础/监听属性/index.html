@@ -11,8 +11,10 @@
 
 <body>
     <div id="root">
-            <h1>a:{{a}}</h1>
-            <div><button @click="a++">a++</button></div>
+        <h1>a:{{a}}</h1>
+        <div><button @click="a++">a++</button></div>
+        <h1>{{b.name}}</h1>
+        <div><button @click="b.name='rose'"> change name</s></button></div>
         <h1>{{b.habits.football.sort}}</h1>
         <div><button @click="b.habits.football.sort='ballet'">b's habit change</s></button></div>
     </div>
@@ -33,16 +35,20 @@
             },
             watch: {
                 //简写形式，不需要immediate和deep时
-                a:function(val,oldVal) {
-                    console.log(val,oldVal,'a changed')
-                    console.log(this.a,'a changed')
+                a(val, oldVal) {
+                    console.log(val, oldVal, 'a changed')//只能监测a最后一次循环的结果
+                    console.log(this.a, 'a changed')
                 },
-
-                b:{
-                    immediate:true,//初始化是否让handler调用，默认false
-                    deep:true,//是否深度监视，默认false
-                    handler:function(val,oldVal){
-                        console.log(val,oldVal,'b changed')
+                //监视多级结构中的某个属性变化
+                'b.name': function (val, oldVal) {
+                    console.log(val, oldVal, 'b.name changed')
+                },
+                //监视多级结构中任意属性变化
+                b: {
+                    immediate: true,//初始化是否让handler调用，默认false
+                    deep: true,//是否深度监视，默认false
+                    handler: function (val, oldVal) {
+                        console.log(val, oldVal, 'b changed')
                     }
                 }
 
@@ -52,8 +58,8 @@
                 this.init()//只能监测a最后一次循环的结果
             },
             methods: {
-                init(){
-                    for(let i =0;i<10;i++){
+                init() {
+                    for (let i = 0; i < 10; i++) {
                         this.a++
                     }
                 }
