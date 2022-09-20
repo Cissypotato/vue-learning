@@ -12,12 +12,12 @@
 <body>
     <div id="root">
 
-        <!-- <button @click="changeJack">changeJack</button>
+        <button @click="changeJack">changeJack</button>
         <ul>
             <li v-for="(item, index) in persons" :key="item.id">
                 {{item.name}}-{{item.age}}
             </li>
-        </ul> -->
+        </ul>
         <hr>
         <!-- <button @click="changeAge">changeAge</button>
         <div>
@@ -25,43 +25,71 @@
         </div> -->
     </div>
     <script>
-        /****关于更改数组不起作用的现象****/
-        // const vm = new Vue({
-        //     el: '#root',
-        //     data: {
-        //         persons: [{
-        //                 id: 1,
-        //                 name: 'jack',
-        //                 age: 18
+
+
+        
+
+        // let person1={
+        //     name:'rose',
+        //     age:18,
+
+        // }
+
+        // function N(obj){
+
+        //     let arr=Object.keys(obj)
+        //     arr.forEach((item)=>{
+        //         Object.defineProperty(this,item,{
+        //             get(){
+        //                 return obj[item]
         //             },
-        //             {
-        //                 id: 2,
-        //                 name: 'rose',
-        //                 age: 16
-        //             }, {
-        //                 id: 3,
-        //                 name: 'john',
-        //                 age: 17
+        //             set(val){
+        //                 obj[item]=val
+
         //             }
+        //         })
+        //     })
 
-        //         ],
-        //     },
-        //     methods: {
-        //         changeJack() {
-        //             console.log('changeJack')
-        //             // this.persons[0].name="jackkkkk"//行
+        // }
+        /****关于更改数组不起作用的现象****/
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                persons: [{
+                        id: 1,
+                        name: 'jack',
+                        age: 18
+                    },
+                    {
+                        id: 2,
+                        name: 'rose',
+                        age: 16
+                    }, {
+                        id: 3,
+                        name: 'john',
+                        age: 17
+                    }
+
+                ],
+            },
+            methods: {
+                changeJack() {
+                    console.log('changeJack')
+                    // this.persons[0].name="jackkkkk"//行
                  
-        //             // this.persons[0]={
-        //             //     id: 1,
-        //             //     name: 'jackkkkk',
-        //             //     age: 19
-        //             // }//不行，vm.person[0]发生改变，但是页面没发生改变，vue开发者工具中的数据没发生改变
+                    // this.persons[0]={
+                    //     id: 1,
+                    //     name: 'jackkkkk',
+                    //     age: 19
+                    // }//不行，vm.person[0]发生改变，但是页面没发生改变，vue开发者工具中的数据没发生改变
+                    
+                    this.persons.splice(0,1,{id: 1,name: 'jackkkkk', age: 20})
+                    //或 this.$set(this.persons,0,{id: 1,name: 'jackkkkk', age: 19})
+                    
+                }
+            },
 
-        //             // this.$set(this.persons,0,{id: 1,name: 'jackkkkk', age: 19})
-        //         }
-        //     },
-
-        // })
+        })
 
         /****vm._data的简单实现****/
         //加工 data 
@@ -102,13 +130,17 @@
         //         student: {
         //             name: 'rose',
         //             gender: 'female',
+        //             hobby:{
+        //                 unreal:['painting','cooking','sewing'],
+        //                 real:['football','baseball','bascketball']
+        //             }
         //         }
         //     },
 
         //     mounted() {
-        //        // this.student.age=18//这样给响应式对象没有的属性赋值，只会有第一次的值，是这个属性是非响应式的（不会在模板中体现）；
-        //        this.$set(this.student,'age',18)//向响应式对象中添加一个 property，并确保这个新 property 同样是响应式的，且触发视图更新就用this.$set()
-
+        //     //    this.student.age=18//这样给响应式对象没有的属性赋值，只会有第一次的值，是这个属性是非响应式的（不会在模板中体现）；
+        //        this.$set(this.student,'age',18)//向响应式对象中添加一个 property，并确保这个新 property 同样是响应式的，且触发视图更新就用this.$set()或Vue.set()
+        //     //    Vue.set(this.student,'age',20)
         //         // console.log(this.student.age,'age')
         //     },
         //     methods: {

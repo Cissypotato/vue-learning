@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for filter</title>
+    <script src="../scripts/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <input type="text" v-model="keyWord" placeholder="请输入姓名">
+        <ul>
+            <li v-for="(item, index) in filPerson" :key="index">
+                {{item.name}}-{{item.age}}
+            </li>
+        </ul>
+    </div>
+    <script>
+        Vue.config.productionTip = false
+        //折叠注释
+        //#region
+        //#endregion
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                keyWord: '',
+                persons: [{
+                        id: 1,
+                        name: 'jack',
+                        age: 18
+                    },
+                    {
+                        id: 2,
+                        name: 'rose',
+                        age: 16
+                    }, {
+                        id: 3,
+                        name: 'john',
+                        age: 17
+                    }
+
+                ],
+                filPerson: []
+            },
+            watch: {
+                keyWord: {
+                    immediate: true,
+                    handler(val) {
+                        this.filPerson = this.persons.filter((item) => {
+                            return item.name.includes(val)
+                        })
+                    }
+                }
+            }
+            //过滤
+            // computed:{
+            //     filPerson(){
+            //         const arr=this.persons.filter((item)=>{
+            //             return item.name.includes(this.keyWord)
+            //         })
+            //         if(this.sortType){
+            //             arr.sort((a,b)=>{
+            //                return this.sortType===1?a.age-b.age:b.age-a.age
+            //             })
+            //         }
+            //         return arr
+            //     }
+            // }
+        })
+    </script>
+</body>
+
+</html>
