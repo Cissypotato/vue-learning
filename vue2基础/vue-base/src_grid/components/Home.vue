@@ -30,16 +30,21 @@
         </div>
       </div>
     </div>
+    <Grid></Grid>
   </div>
 </template>
 <script>
+import Grid from "./Grid.vue";
 export default {
   name: "Home",
+  components: {
+    Grid,
+  },
 };
 </script>
 
 <style scoped>
-  .title{
-    border: 1px solid red;
-  }
+.title {
+  border: 1px solid red;
+}
 </style>
